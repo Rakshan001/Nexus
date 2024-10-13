@@ -1,0 +1,114 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-top: 20px;
+            border: 3px solid #007bff;
+        }
+        .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .card-text {
+            margin: 10px 0;
+            color: #555;
+        }
+        .card-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .card-text a:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Alumni Profile</h2>
+        <div class="profile-card mx-auto">
+            <!-- Check if alumni has a profile picture -->
+            {% if alumni.profile_picture %}
+                <img src="{{ alumni.profile_picture.url }}" class="profile-img" alt="{{ alumni.first_name }}'s Profile Picture">
+            {% else %}
+                <img src="{% static 'alumni_details/assets/default.png' %}" class="profile-img" alt="Default Profile Picture">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ alumni.first_name }} {{ alumni.last_name }}</h5>
+                <p class="card-text"><strong>Phone:</strong> {{ alumni.phone_number }}</p>
+                <p class="card-text"><strong>Graduation Year:</strong> {{ alumni.graduation_year }}</p>
+                <p class="card-text"><strong>Location:</strong> {{ alumni.location }}</p>
+                <p class="card-text"><strong>Batch:</strong> {{ alumni.batch }}</p>
+                <p class="card-text"><strong>USN:</strong> {{ alumni.usn }}</p>
+                <p class="card-text"><strong>LinkedIn:</strong> <a href="{{ alumni.linkedin_url }}">{{ alumni.linkedin_url }}</a></p>
+                <p class="card-text"><strong>Current Position:</strong> {{ alumni.current_position }} at {{ alumni.company_name }}</p>
+                <p class="card-text"><strong>Bio:</strong> {{ alumni.bio }}</p>
+                <p class="card-text"><strong>Achievements:</strong> {{ alumni.achievements }}</p>
+                <p class="card-text"><strong>Date of Birth:</strong> {{ alumni.dob }}</p>
+                <a href="{% url 'update_alumni_profile' %}" class="btn btn-primary btn-block">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

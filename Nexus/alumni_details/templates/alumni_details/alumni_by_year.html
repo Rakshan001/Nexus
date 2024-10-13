@@ -1,0 +1,111 @@
+{% extends 'alumni_details/base.html' %}
+
+{% block title %}Alumni Graduates - {{ graduation_year }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .alumni-profiles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .alumni-profile {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 200px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+    .alumni-profile:hover {
+        transform: translateY(-10px);
+    }
+    .alumni-profile img {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid #ddd;
+    }
+    .alumni-profile p {
+        margin: 10px 0;
+        color: #555;
+    }
+    .alumni-profile p:first-of-type {
+        font-weight: bold;
+        color: #333;
+    }
+    a {
+        display: block;
+        text-align: center;
+        margin: 20px 0;
+        color: #007bff;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h1>Alumni Graduates - {{ graduation_year }}</h1>
+
+<!-- Filter Form -->
+<form method="get" action="">
+    <label for="branch">Select Branch:</label>
+    <select id="branch" name="branch">
+        <option value="">All Branches</option>
+        {% for branch in branches %}
+            <option value="{{ branch }}" {% if branch == selected_branch %}selected{% endif %}>{{ branch }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Apply Filter</button>
+</form>
+
+<!-- Search Form -->
+<form method="GET" action="{% url 'alumni_search' %}">
+    <label for="alumni">Search Alumni:</label>
+    <input type="text" name="alumni" id="alumni" placeholder="Search alumni by name">
+    <button type="submit">Search</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#alumni").autocomplete({
+            source: '{% url "autocomplete" %}',
+            minLength: 2,
+            select: function(event, ui) {
+                $('#alumni').val(ui.item.value);
+            }
+        });
+    });
+</script>
+
+<!-- Alumni Profiles -->
+<div class="alumni-profiles">
+    {% for alumni in alumni %}
+        <div class="alumni-profile">
+            <img src="{{ alumni.profile_picture.url }}" alt="Profile Picture">
+            <p>{{ alumni.first_name }} {{ alumni.last_name }}</p>
+            <p>{{ alumni.current_position }} at {{ alumni.company_name }}</p>
+        </div>
+    {% empty %}
+        <p>No alumni found for this graduation year and branch.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'alumni_list' %}">Back to Alumni List</a>
+{% endblock %}
