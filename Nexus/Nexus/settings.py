@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     'alumni_details',
     'achievements',
     'podcast',
+    
+    'coordinators',
 
+    
     
     'image_uploader_widget', #custom image uploader
     'widget_tweaks', #this is added to put css for update-profile html page

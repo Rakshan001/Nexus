@@ -5,3 +5,4 @@ python-decouple
 django-jazzmin
 django-defender
 pip install django-embed-video
+pip install django-widget-tweaks

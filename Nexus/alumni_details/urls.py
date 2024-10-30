@@ -19,7 +19,13 @@ urlpatterns = [
 
 
     # **********************
-     path('autocomplete/', views.autocomplete, name='autocomplete'),
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
     path('alumni-search/', views.alumni_search, name='alumni_search'),
+
+    # search result
+    # path('alumni/search/', views.search_alumni, name='search_alumni'),
+
+
+     path('council_members/', views.council_members_view, name='council_members'),
 ]
 
